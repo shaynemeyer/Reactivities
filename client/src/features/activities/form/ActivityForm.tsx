@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
+  id: z.string().optional(),
   title: z.string().min(2).max(100),
   description: z.string().max(250),
   category: z.string().min(2).max(50),
@@ -26,12 +27,14 @@ const formSchema = z.object({
 type Props = {
   activity?: Activity;
   closeForm: () => void;
+  submitForm: (activity: Activity) => void;
 };
 
-function ActivityForm({ activity, closeForm }: Props) {
+function ActivityForm({ activity, closeForm, submitForm }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      id: activity?.id || "",
       title: activity?.title || "",
       description: activity?.description || "",
       category: activity?.category || "",
@@ -42,7 +45,8 @@ function ActivityForm({ activity, closeForm }: Props) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    if (activity) values.id = activity.id;
+    submitForm(values as Activity);
   }
 
   return (
@@ -53,6 +57,7 @@ function ActivityForm({ activity, closeForm }: Props) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <Input type="hidden" name="id" />
             <FormField
               control={form.control}
               name="title"
