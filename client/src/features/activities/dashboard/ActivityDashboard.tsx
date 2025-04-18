@@ -1,4 +1,5 @@
 import ActivityDetail from "../details/ActivityDetail";
+import ActivityForm from "../form/ActivityForm";
 import ActivityList from "./ActivityList";
 
 type Props = {
@@ -26,6 +27,7 @@ function ActivityDashboard({
             cancelSelectActivity={cancelSelectActivity}
           />
         )}
+        <ActivityForm />
       </div>
     </div>
   );
