@@ -6,7 +6,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Users } from "lucide-react";
 
-function NavBar() {
+type Props = {
+  openForm: () => void;
+};
+
+function NavBar({ openForm }: Props) {
   return (
     <div className="bg-gradient-to-r from-blue-900 from-10% via-sky-500 via-30% to-emerald-600 to-90% text-white h-16 align-middle flex flex-row justify-between items-center px-4 gap-2">
       <div className="flex flex-row gap-4 items-center">
@@ -29,7 +33,9 @@ function NavBar() {
         </NavigationMenu>
       </div>
       <div>
-        <Button className="text-white bg-orange-500">Create Activity</Button>
+        <Button className="text-white bg-orange-500" onClick={openForm}>
+          Create Activity
+        </Button>
       </div>
     </div>
   );

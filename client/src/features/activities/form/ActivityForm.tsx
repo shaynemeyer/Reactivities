@@ -23,16 +23,21 @@ const formSchema = z.object({
   venue: z.string().optional(),
 });
 
-function ActivityForm() {
+type Props = {
+  activity?: Activity;
+  closeForm: () => void;
+};
+
+function ActivityForm({ activity, closeForm }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      category: "",
-      date: "",
-      city: "",
-      venue: "",
+      title: activity?.title || "",
+      description: activity?.description || "",
+      category: activity?.category || "",
+      date: activity?.date || "",
+      city: activity?.city || "",
+      venue: activity?.venue || "",
     },
   });
 
@@ -135,7 +140,9 @@ function ActivityForm() {
               <Button type="submit" size="sm">
                 Submit
               </Button>
-              <Button variant="ghost">Cancel</Button>
+              <Button variant="ghost" onClick={closeForm}>
+                Cancel
+              </Button>
             </div>
           </form>
         </Form>

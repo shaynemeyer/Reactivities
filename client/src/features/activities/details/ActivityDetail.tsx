@@ -10,9 +10,10 @@ import {
 type Props = {
   activity: Activity;
   cancelSelectActivity: () => void;
+  openForm: (id: string) => void;
 };
 
-function ActivityDetail({ activity, cancelSelectActivity }: Props) {
+function ActivityDetail({ activity, cancelSelectActivity, openForm }: Props) {
   return (
     <Card className="rounded-md">
       <CardHeader>
@@ -27,9 +28,8 @@ function ActivityDetail({ activity, cancelSelectActivity }: Props) {
         <p>{activity.description}</p>
       </CardContent>
       <CardFooter>
-        {" "}
         <CardAction>
-          <Button>Edit</Button>
+          <Button onClick={() => openForm(activity.id)}>Edit</Button>
           <Button variant="ghost" onClick={cancelSelectActivity}>
             Cancel
           </Button>

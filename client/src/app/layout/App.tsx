@@ -8,6 +8,7 @@ function App() {
   const [selectedActivity, setSelectedActivity] = useState<
     Activity | undefined
   >(undefined);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     axios
@@ -25,9 +26,22 @@ function App() {
     setSelectedActivity(undefined);
   };
 
+  const handleOpenForm = (id?: string) => {
+    if (id) {
+      handleSelectActivity(id);
+    } else {
+      handleCancelSelectActivity();
+    }
+    setEditMode(true);
+  };
+
+  const handleFormClose = () => {
+    setEditMode(false);
+  };
+
   return (
     <div className="bg-gray-100">
-      <NavBar />
+      <NavBar openForm={handleOpenForm} />
 
       <section className="mx-4 mt-2">
         <h1>Reactivities</h1>
@@ -36,6 +50,9 @@ function App() {
           selectActivity={handleSelectActivity}
           cancelSelectActivity={handleCancelSelectActivity}
           selectedActivity={selectedActivity}
+          editMode={editMode}
+          openForm={handleOpenForm}
+          closeForm={handleFormClose}
         />
       </section>
     </div>
