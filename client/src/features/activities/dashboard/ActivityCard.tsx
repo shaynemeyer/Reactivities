@@ -8,16 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useActivities } from "@/lib/hooks/useActivities";
 import { formatDateForDisplay } from "@/lib/utils";
 
 type Props = {
   activity: Activity;
   selectActivity: (id: string) => void;
-  deleteActivity: (id: string) => void;
   key?: string;
 };
 
-function ActivityCard({ activity, selectActivity, deleteActivity }: Props) {
+function ActivityCard({ activity, selectActivity }: Props) {
+  const { deleteActivity } = useActivities();
+
   return (
     <Card className="rounded-md mb-4" key={activity.id}>
       <CardHeader>
@@ -39,7 +41,8 @@ function ActivityCard({ activity, selectActivity, deleteActivity }: Props) {
           <Button
             size="sm"
             variant="destructive"
-            onClick={() => deleteActivity(activity.id)}
+            onClick={() => deleteActivity.mutate(activity.id)}
+            disabled={deleteActivity.isPending}
           >
             Delete
           </Button>

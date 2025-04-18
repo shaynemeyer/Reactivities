@@ -32,11 +32,6 @@ function App() {
     setEditMode(false);
   };
 
-  const handleDelete = (id: string) => {
-    console.log(`Deleting activity with id: ${id}`);
-    // setActivities(activities.filter((x) => x.id !== id));
-  };
-
   return (
     <div>
       <NavBar openForm={handleOpenForm} />
@@ -53,7 +48,6 @@ function App() {
             editMode={editMode}
             openForm={handleOpenForm}
             closeForm={handleFormClose}
-            deleteActivity={handleDelete}
           />
         )}
       </section>

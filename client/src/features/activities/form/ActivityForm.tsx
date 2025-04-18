@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useActivities } from "@/lib/hooks/useActivities";
-import { formateDateForInput } from "@/lib/utils";
+import { formateDateForInput, generateUUID } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,7 +41,7 @@ type Props = {
 };
 
 function ActivityForm({ activity, closeForm }: Props) {
-  const { updateActivity } = useActivities();
+  const { updateActivity, createActivity } = useActivities();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -61,7 +61,11 @@ function ActivityForm({ activity, closeForm }: Props) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (activity) {
       values.id = activity.id;
-      await updateActivity.mutate(values as unknown as Activity);
+      await updateActivity.mutateAsync(values as unknown as Activity);
+      closeForm();
+    } else {
+      values.id = generateUUID();
+      await createActivity.mutateAsync(values as unknown as Activity);
       closeForm();
     }
   }
@@ -177,7 +181,7 @@ function ActivityForm({ activity, closeForm }: Props) {
               <Button
                 type="submit"
                 size="sm"
-                disabled={updateActivity.isPending}
+                disabled={updateActivity.isPending || createActivity.isPending}
               >
                 Submit
               </Button>
