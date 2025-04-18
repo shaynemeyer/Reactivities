@@ -133,3 +133,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  background-color: bg-gray-100;
+}
