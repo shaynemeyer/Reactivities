@@ -1,7 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import NavBar from "./NavBar";
-import ActivityDashboard from "@/features/activities/dashboard/ActivityDashboard";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import NavBar from './NavBar';
+import ActivityDashboard from '@/features/activities/dashboard/ActivityDashboard';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get<Activity[]>("https://localhost:5001/api/activities")
+      .get<Activity[]>('https://localhost:5001/api/activities')
       .then((response) => setActivities(response.data));
 
     return () => {};
@@ -61,8 +61,7 @@ function App() {
     <div className="bg-gray-100">
       <NavBar openForm={handleOpenForm} />
 
-      <section className="mx-4 mt-2">
-        <h1>Reactivities</h1>
+      <section className="mx-4 mt-4">
         <ActivityDashboard
           activities={activities}
           selectActivity={handleSelectActivity}

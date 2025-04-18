@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -7,7 +7,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
+import { formatDateForDisplay } from '@/lib/utils';
 
 type Props = {
   activity: Activity;
@@ -20,7 +21,7 @@ function ActivityCard({ activity, selectActivity }: Props) {
     <Card className="rounded-md mb-4" key={activity.id}>
       <CardHeader>
         <CardTitle>{activity.title}</CardTitle>
-        <CardDescription>{activity.date}</CardDescription>
+        <CardDescription>{formatDateForDisplay(activity.date)}</CardDescription>
       </CardHeader>
       <CardContent>
         <p>{activity.description}</p>
