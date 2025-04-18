@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useActivities } from "@/lib/hooks/useActivities";
 import { formateDateForInput } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -37,10 +38,11 @@ const formSchema = z.object({
 type Props = {
   activity?: Activity;
   closeForm: () => void;
-  submitForm: (activity: Activity) => void;
 };
 
-function ActivityForm({ activity, closeForm, submitForm }: Props) {
+function ActivityForm({ activity, closeForm }: Props) {
+  const { updateActivity } = useActivities();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,16 +50,20 @@ function ActivityForm({ activity, closeForm, submitForm }: Props) {
       title: activity?.title || "",
       description: activity?.description || "",
       category: activity?.category || "",
-      date: activity?.date ? formateDateForInput(activity?.date) : "",
+      date: activity?.date
+        ? formateDateForInput(activity?.date)
+        : formateDateForInput(new Date().toString()),
       city: activity?.city || "",
       venue: activity?.venue || "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (activity) values.id = activity.id;
-    console.log({ values });
-    submitForm(values as Activity);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (activity) {
+      values.id = activity.id;
+      await updateActivity.mutate(values as unknown as Activity);
+      closeForm();
+    }
   }
 
   return (
@@ -168,7 +174,11 @@ function ActivityForm({ activity, closeForm, submitForm }: Props) {
             />
 
             <div className="flex justify-end w-full">
-              <Button type="submit" size="sm">
+              <Button
+                type="submit"
+                size="sm"
+                disabled={updateActivity.isPending}
+              >
                 Submit
               </Button>
               <Button variant="ghost" onClick={closeForm}>

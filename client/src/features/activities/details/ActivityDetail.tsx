@@ -6,14 +6,24 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { useActivities } from "@/lib/hooks/useActivities";
 
 type Props = {
-  activity: Activity;
+  selectedActivity: Activity;
   cancelSelectActivity: () => void;
   openForm: (id: string) => void;
 };
 
-function ActivityDetail({ activity, cancelSelectActivity, openForm }: Props) {
+function ActivityDetail({
+  selectedActivity,
+  cancelSelectActivity,
+  openForm,
+}: Props) {
+  const { activities } = useActivities();
+  const activity = activities?.find((x) => x.id === selectedActivity.id);
+
+  if (!activity) return <h5>Loading...</h5>;
+
   return (
     <Card className="rounded-md">
       <CardHeader>
