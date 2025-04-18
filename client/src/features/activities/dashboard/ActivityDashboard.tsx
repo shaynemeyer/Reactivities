@@ -1,13 +1,32 @@
+import ActivityDetail from "../details/ActivityDetail";
 import ActivityList from "./ActivityList";
 
 type Props = {
   activities: Activity[];
+  selectActivity: (id: string) => void;
+  cancelSelectActivity: () => void;
+  selectedActivity?: Activity;
 };
 
-function ActivityDashboard({ activities }: Props) {
+function ActivityDashboard({
+  activities,
+  selectActivity,
+  cancelSelectActivity,
+  selectedActivity,
+}: Props) {
   return (
-    <div>
-      <ActivityList activities={activities} />
+    <div className="grid grid-cols-5 gap-4">
+      <div className="col-span-3">
+        <ActivityList activities={activities} selectActivity={selectActivity} />
+      </div>
+      <div className="col-span-2">
+        {selectedActivity && (
+          <ActivityDetail
+            activity={selectedActivity}
+            cancelSelectActivity={cancelSelectActivity}
+          />
+        )}
+      </div>
     </div>
   );
 }

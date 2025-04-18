@@ -11,10 +11,11 @@ import {
 
 type Props = {
   activity: Activity;
+  selectActivity: (id: string) => void;
   key?: string;
 };
 
-function ActivityCard({ activity }: Props) {
+function ActivityCard({ activity, selectActivity }: Props) {
   return (
     <Card className="rounded-md mb-4" key={activity.id}>
       <CardHeader>
@@ -29,7 +30,9 @@ function ActivityCard({ activity }: Props) {
       </CardContent>
       <CardFooter className="flex justify-between">
         <Badge variant="outline">{activity.category}</Badge>
-        <Button size="sm">View</Button>
+        <Button size="sm" onClick={() => selectActivity(activity.id)}>
+          View
+        </Button>
       </CardFooter>
     </Card>
   );
