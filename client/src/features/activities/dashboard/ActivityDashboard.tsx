@@ -11,6 +11,7 @@ type Props = {
   closeForm: () => void;
   editMode: boolean;
   submitForm: (activity: Activity) => void;
+  deleteActivity: (id: string) => void;
 };
 
 function ActivityDashboard({
@@ -22,11 +23,16 @@ function ActivityDashboard({
   closeForm,
   editMode,
   submitForm,
+  deleteActivity,
 }: Props) {
   return (
     <div className="grid grid-cols-5 gap-4">
       <div className="col-span-3">
-        <ActivityList activities={activities} selectActivity={selectActivity} />
+        <ActivityList
+          activities={activities}
+          selectActivity={selectActivity}
+          deleteActivity={deleteActivity}
+        />
       </div>
       <div className="col-span-2">
         {selectedActivity && !editMode && (

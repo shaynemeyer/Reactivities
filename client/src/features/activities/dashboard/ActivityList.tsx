@@ -3,9 +3,10 @@ import ActivityCard from "./ActivityCard";
 type Props = {
   activities: Activity[];
   selectActivity: (id: string) => void;
+  deleteActivity: (id: string) => void;
 };
 
-function ActivityList({ activities, selectActivity }: Props) {
+function ActivityList({ activities, selectActivity, deleteActivity }: Props) {
   return (
     <>
       {activities.map((activity) => (
@@ -13,6 +14,7 @@ function ActivityList({ activities, selectActivity }: Props) {
           key={activity.id}
           activity={activity}
           selectActivity={selectActivity}
+          deleteActivity={deleteActivity}
         />
       ))}
     </>

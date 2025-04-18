@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,16 +7,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { formatDateForDisplay } from '@/lib/utils';
+} from "@/components/ui/card";
+import { formatDateForDisplay } from "@/lib/utils";
 
 type Props = {
   activity: Activity;
   selectActivity: (id: string) => void;
+  deleteActivity: (id: string) => void;
   key?: string;
 };
 
-function ActivityCard({ activity, selectActivity }: Props) {
+function ActivityCard({ activity, selectActivity, deleteActivity }: Props) {
   return (
     <Card className="rounded-md mb-4" key={activity.id}>
       <CardHeader>
@@ -31,9 +32,18 @@ function ActivityCard({ activity, selectActivity }: Props) {
       </CardContent>
       <CardFooter className="flex justify-between">
         <Badge variant="outline">{activity.category}</Badge>
-        <Button size="sm" onClick={() => selectActivity(activity.id)}>
-          View
-        </Button>
+        <div className="flex gap-2">
+          <Button size="sm" onClick={() => selectActivity(activity.id)}>
+            View
+          </Button>
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={() => deleteActivity(activity.id)}
+          >
+            Delete
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );

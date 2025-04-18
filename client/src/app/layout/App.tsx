@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import NavBar from './NavBar';
-import ActivityDashboard from '@/features/activities/dashboard/ActivityDashboard';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import NavBar from "./NavBar";
+import ActivityDashboard from "@/features/activities/dashboard/ActivityDashboard";
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get<Activity[]>('https://localhost:5001/api/activities')
+      .get<Activity[]>("https://localhost:5001/api/activities")
       .then((response) => setActivities(response.data));
 
     return () => {};
@@ -57,6 +57,10 @@ function App() {
     setEditMode(false);
   };
 
+  const handleDelete = (id: string) => {
+    setActivities(activities.filter((x) => x.id !== id));
+  };
+
   return (
     <div className="bg-gray-100">
       <NavBar openForm={handleOpenForm} />
@@ -71,6 +75,7 @@ function App() {
           openForm={handleOpenForm}
           closeForm={handleFormClose}
           submitForm={handleSubmitForm}
+          deleteActivity={handleDelete}
         />
       </section>
     </div>

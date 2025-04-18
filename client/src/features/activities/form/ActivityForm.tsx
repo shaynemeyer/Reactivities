@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -7,8 +7,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -17,12 +17,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { formateDateForInput } from '@/lib/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { formateDateForInput } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -44,13 +44,13 @@ function ActivityForm({ activity, closeForm, submitForm }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: activity?.id || '',
-      title: activity?.title || '',
-      description: activity?.description || '',
-      category: activity?.category || '',
-      date: activity?.date ? formateDateForInput(activity?.date) : '',
-      city: activity?.city || '',
-      venue: activity?.venue || '',
+      id: activity?.id || "",
+      title: activity?.title || "",
+      description: activity?.description || "",
+      category: activity?.category || "",
+      date: activity?.date ? formateDateForInput(activity?.date) : "",
+      city: activity?.city || "",
+      venue: activity?.venue || "",
     },
   });
 
@@ -107,7 +107,7 @@ function ActivityForm({ activity, closeForm, submitForm }: Props) {
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="w-full">
                         <SelectGroup>
                           <SelectLabel>Categories</SelectLabel>
                           <SelectItem value="culture">Culture</SelectItem>
