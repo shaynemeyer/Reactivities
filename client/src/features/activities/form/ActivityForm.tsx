@@ -77,7 +77,7 @@ function ActivityForm() {
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl">{`${
-          id ? "Manage" : "Create"
+          id ? "Edit" : "Create"
         } activity`}</CardTitle>
       </CardHeader>
       <CardContent>
