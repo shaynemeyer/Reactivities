@@ -10,14 +10,15 @@ import {
 } from "@/components/ui/card";
 import { useActivities } from "@/lib/hooks/useActivities";
 import { formatDateForDisplay } from "@/lib/utils";
+import { useNavigate } from "react-router";
 
 type Props = {
   activity: Activity;
-  selectActivity: (id: string) => void;
   key?: string;
 };
 
-function ActivityCard({ activity, selectActivity }: Props) {
+function ActivityCard({ activity }: Props) {
+  const navigate = useNavigate();
   const { deleteActivity } = useActivities();
 
   return (
@@ -35,7 +36,10 @@ function ActivityCard({ activity, selectActivity }: Props) {
       <CardFooter className="flex justify-between">
         <Badge variant="outline">{activity.category}</Badge>
         <div className="flex gap-2">
-          <Button size="sm" onClick={() => selectActivity(activity.id)}>
+          <Button
+            size="sm"
+            onClick={() => navigate(`/activities/${activity.id}`)}
+          >
             View
           </Button>
           <Button

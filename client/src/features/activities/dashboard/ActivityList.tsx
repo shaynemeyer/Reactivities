@@ -1,19 +1,15 @@
+import { useActivities } from "@/lib/hooks/useActivities";
 import ActivityCard from "./ActivityCard";
 
-type Props = {
-  activities: Activity[];
-  selectActivity: (id: string) => void;
-};
+function ActivityList() {
+  const { activities, isPending } = useActivities();
 
-function ActivityList({ activities, selectActivity }: Props) {
+  if (!activities || isPending) <h5>Loading...</h5>;
+
   return (
     <>
-      {activities.map((activity) => (
-        <ActivityCard
-          key={activity.id}
-          activity={activity}
-          selectActivity={selectActivity}
-        />
+      {activities?.map((activity) => (
+        <ActivityCard key={activity.id} activity={activity} />
       ))}
     </>
   );

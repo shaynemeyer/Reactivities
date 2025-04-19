@@ -23,6 +23,7 @@ import { useActivities } from "@/lib/hooks/useActivities";
 import { formateDateForInput, generateUUID } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -35,18 +36,16 @@ const formSchema = z.object({
   venue: z.string().optional(),
 });
 
-type Props = {
-  activity?: Activity;
-  closeForm: () => void;
-};
-
-function ActivityForm({ activity, closeForm }: Props) {
-  const { updateActivity, createActivity } = useActivities();
+function ActivityForm() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { updateActivity, createActivity, activity, isLoadingActivity } =
+    useActivities(id);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: activity?.id || "",
+      id: activity?.id || generateUUID(),
       title: activity?.title || "",
       description: activity?.description || "",
       category: activity?.category || "",
@@ -62,18 +61,24 @@ function ActivityForm({ activity, closeForm }: Props) {
     if (activity) {
       values.id = activity.id;
       await updateActivity.mutateAsync(values as unknown as Activity);
-      closeForm();
+      navigate(`/activities/${activity.id}`);
     } else {
-      values.id = generateUUID();
-      await createActivity.mutateAsync(values as unknown as Activity);
-      closeForm();
+      createActivity.mutate(values as unknown as Activity, {
+        onSuccess: (id) => {
+          navigate(`/activities/${id}`);
+        },
+      });
     }
   }
+
+  if (isLoadingActivity) return <h5>Loading activity...</h5>;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">Create activity</CardTitle>
+        <CardTitle className="text-2xl">{`${
+          id ? "Manage" : "Create"
+        } activity`}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -185,9 +190,7 @@ function ActivityForm({ activity, closeForm }: Props) {
               >
                 Submit
               </Button>
-              <Button variant="ghost" onClick={closeForm}>
-                Cancel
-              </Button>
+              <Button variant="ghost">Cancel</Button>
             </div>
           </form>
         </Form>

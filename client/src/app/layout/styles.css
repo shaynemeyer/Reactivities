@@ -132,8 +132,17 @@
   body {
     @apply bg-background text-foreground;
   }
+
 }
 
 body {
   background-color: bg-gray-100;
+}
+
+.navLink {
+  @apply text-xl
+}
+
+.navLink.active {
+  @apply font-extrabold text-blue-900
 }

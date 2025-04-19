@@ -7,22 +7,17 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { useActivities } from "@/lib/hooks/useActivities";
+import { useNavigate, useParams } from "react-router";
 
-type Props = {
-  selectedActivity: Activity;
-  cancelSelectActivity: () => void;
-  openForm: (id: string) => void;
-};
+function ActivityDetail() {
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-function ActivityDetail({
-  selectedActivity,
-  cancelSelectActivity,
-  openForm,
-}: Props) {
-  const { activities } = useActivities();
-  const activity = activities?.find((x) => x.id === selectedActivity.id);
+  const { activity, isLoadingActivity } = useActivities(id);
 
-  if (!activity) return <h5>Loading...</h5>;
+  if (isLoadingActivity) return <h5>Loading...</h5>;
+
+  if (!activity) return <h5>Activity not found</h5>;
 
   return (
     <Card className="rounded-md">
@@ -39,8 +34,10 @@ function ActivityDetail({
       </CardContent>
       <CardFooter>
         <CardAction>
-          <Button onClick={() => openForm(activity.id)}>Edit</Button>
-          <Button variant="ghost" onClick={cancelSelectActivity}>
+          <Button onClick={() => navigate(`/manage/${activity.id}`)}>
+            Edit
+          </Button>
+          <Button variant="ghost" onClick={() => navigate("/activities")}>
             Cancel
           </Button>
         </CardAction>
