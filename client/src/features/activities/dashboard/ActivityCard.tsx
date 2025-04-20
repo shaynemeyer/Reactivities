@@ -16,9 +16,8 @@ function ActivityCard({ activity }: Props) {
 
   const isHost = false;
   const isGoing = false;
-  const label = isHost ? "You are hosting" : "You are going";
+  // const label = isHost ? "You are hosting" : "You are going";
   const isCancelled = false;
-  const color = isHost ? "secondary" : isGoing ? "warning" : "default";
 
   return (
     <Card className="rounded-md mb-4" key={activity.id}>
@@ -40,7 +39,7 @@ function ActivityCard({ activity }: Props) {
             </div>
             <div className="flex flex-col gap-2 mr-2">
               {isHost && <Badge variant="secondary">Hosting</Badge>}
-              {isGoing && <Badge variant="outline">Going</Badge>}
+              {isGoing && <Badge variant="default">Going</Badge>}
               {isCancelled && (
                 <Badge variant="destructive" className="rounded-xl bg-gray-100">
                   Cancelled
