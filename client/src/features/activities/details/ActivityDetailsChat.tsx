@@ -6,8 +6,8 @@ import { Link } from 'react-router';
 function ActivityDetailsChat() {
   return (
     <>
-      <Card>
-        <div className="text-center primary p-2">
+      <Card className="py-0 rounded-t-xl pb-2">
+        <div className="text-center bg-primary p-2 text-white rounded-t-xl">
           <h3>Chat about this event</h3>
         </div>
         <CardContent>

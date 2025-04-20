@@ -17,8 +17,8 @@ function ActivityDetailPage() {
   return (
     <div className="grid grid-flow-col gap-2">
       <div className="col-span-6">
-        <ActivityDetailsHeader />
-        <ActivityDetailsInfo />
+        <ActivityDetailsHeader activity={activity} />
+        <ActivityDetailsInfo activity={activity} />
         <ActivityDetailsChat />
       </div>
       <div className="col-span-3">

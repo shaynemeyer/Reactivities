@@ -1,10 +1,14 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import { cn, formatDateForDisplay } from '@/lib/utils';
 import { Link } from 'react-router';
 
-function ActivityDetailsHeader() {
+type Props = {
+  activity: Activity;
+};
+
+function ActivityDetailsHeader({ activity }: Props) {
   const isCancelled = false;
   const isHost = true;
   const isGoing = true;
@@ -20,14 +24,14 @@ function ActivityDetailsHeader() {
         )}
         <img
           className="rounded-xl w-full h-[300px]"
-          src="/images/categoryImages/travel.jpg"
-          alt="travel image"
+          src={`/images/categoryImages/${activity.category}.jpg`}
+          alt={`${activity.category} image`}
         />
         <div className="flex absolute bottom-0 w-full text-white flex-row justify-between content-end box-border p-5">
           {/* Text Section */}
           <div className="flex flex-col bg-black/50 rounded-2xl p-3">
-            <h4>Activity title goes here</h4>
-            <h5>1 Jan 2025 at 1:40pm</h5>
+            <h2 className="font-bold">{activity.title}</h2>
+            <h5>{formatDateForDisplay(activity.date)}</h5>
             <h5>
               Hosted by{' '}
               <Link
