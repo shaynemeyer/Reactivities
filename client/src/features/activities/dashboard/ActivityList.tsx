@@ -1,5 +1,5 @@
-import { useActivities } from "@/lib/hooks/useActivities";
-import ActivityCard from "./ActivityCard";
+import { useActivities } from '@/lib/hooks/useActivities';
+import ActivityCard from './ActivityCard';
 
 function ActivityList() {
   const { activities, isPending } = useActivities();

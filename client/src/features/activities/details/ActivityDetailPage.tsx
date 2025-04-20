@@ -1,9 +1,9 @@
-import { useActivities } from "@/lib/hooks/useActivities";
-import { useParams } from "react-router";
-import ActivityDetailsHeader from "./ActivityDetailsHeader";
-import ActivityDetailsInfo from "./ActivityDetailsInfo";
-import ActivityDetailsChat from "./ActivityDetailsChat";
-import ActivityDetailsSidebar from "./ActivityDetailsSidebar";
+import { useActivities } from '@/lib/hooks/useActivities';
+import { useParams } from 'react-router';
+import ActivityDetailsHeader from './ActivityDetailsHeader';
+import ActivityDetailsInfo from './ActivityDetailsInfo';
+import ActivityDetailsChat from './ActivityDetailsChat';
+import ActivityDetailsSidebar from './ActivityDetailsSidebar';
 
 function ActivityDetailPage() {
   const { id } = useParams();
@@ -15,7 +15,7 @@ function ActivityDetailPage() {
   if (!activity) return <h5>Activity not found</h5>;
 
   return (
-    <div className="grid grid-flow-col">
+    <div className="grid grid-flow-col gap-2">
       <div className="col-span-6">
         <ActivityDetailsHeader />
         <ActivityDetailsInfo />
