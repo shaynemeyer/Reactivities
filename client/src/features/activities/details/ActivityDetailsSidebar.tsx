@@ -5,8 +5,8 @@ function ActivityDetailsSidebar() {
   const isHost = true;
   return (
     <>
-      <Card>
-        <CardContent>
+      <Card className="mb-2 py-2">
+        <CardContent className="py-0">
           <h6>2 people going</h6>
         </CardContent>
       </Card>
