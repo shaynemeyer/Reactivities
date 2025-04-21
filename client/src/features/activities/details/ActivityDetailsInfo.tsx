@@ -1,6 +1,6 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { formatDateForDisplay } from '@/lib/utils';
-import { Calendar, Info, MapPin } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
+import { formatDateForDisplay } from "@/lib/utils";
+import { Calendar, Info, MapPin } from "lucide-react";
 
 type Props = {
   activity: Activity;
@@ -19,7 +19,9 @@ function ActivityDetailsInfo({ activity }: Props) {
       </CardContent>
       <CardContent className="flex gap-3">
         <MapPin className="text-primary" />
-        <span> {activity.venue}</span>
+        <span>
+          {activity.venue}, {activity.city}
+        </span>
       </CardContent>
     </Card>
   );

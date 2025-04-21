@@ -52,7 +52,7 @@ function ActivityCard({ activity }: Props) {
       <hr />
       <CardContent className="flex gap-3 text-sm">
         <div className="flex gap-1">
-          <Clock4 />{" "}
+          <Clock4 />
           <h5 className="text-gray-500 mb-3">
             {formatDateForDisplay(activity.date)}
           </h5>

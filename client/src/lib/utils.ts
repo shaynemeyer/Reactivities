@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { format } from "date-fns/format";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -6,14 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDateForDisplay(myDate: string) {
-  const yourDate = new Date(myDate);
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  const formattedTime = formatter.format(yourDate);
-  return `${yourDate.toLocaleDateString()} ${formattedTime}`;
+  return format(myDate, "dd MMM yyyy h:mm a");
 }
 
 export function formateDateForInput(myDate: string) {

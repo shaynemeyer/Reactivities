@@ -145,3 +145,8 @@ body {
 .navLink.active {
   @apply font-extrabold text-blue-900;
 }
+
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+}

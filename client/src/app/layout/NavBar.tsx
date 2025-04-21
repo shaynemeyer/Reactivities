@@ -8,7 +8,7 @@ import { NavLink } from "react-router";
 
 function NavBar() {
   return (
-    <div className="bg-gradient-to-r from-blue-900 from-10% via-sky-500 via-30% to-emerald-600 to-90% text-white h-16 align-middle flex flex-row justify-between items-center px-4 gap-2">
+    <div className="bg-gradient-to-r from-blue-700 from-10% via-sky-500 via-30% to-emerald-600 to-90% text-white h-16 align-middle flex flex-row justify-between items-center px-4 gap-2">
       <div>
         <NavLink to="/" className="flex flex-row gap-4 items-center">
           <Users className="h-10" />
