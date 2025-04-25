@@ -1,8 +1,8 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn, formatDateForDisplay } from '@/lib/utils';
-import { Link } from 'react-router';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn, formatDateForDisplay } from "@/lib/utils";
+import { Link } from "react-router";
 
 type Props = {
   activity: Activity;
@@ -33,10 +33,10 @@ function ActivityDetailsHeader({ activity }: Props) {
             <h2 className="font-bold">{activity.title}</h2>
             <h5>{formatDateForDisplay(activity.date)}</h5>
             <h5>
-              Hosted by{' '}
+              Hosted by{" "}
               <Link
                 to={`/profiles/username`}
-                style={{ color: 'white', fontWeight: 'bold' }}
+                style={{ color: "white", fontWeight: "bold" }}
               >
                 Bob
               </Link>
@@ -47,12 +47,12 @@ function ActivityDetailsHeader({ activity }: Props) {
             {isHost ? (
               <>
                 <Button
-                  variant={isCancelled ? 'secondary' : 'destructive'}
+                  variant={isCancelled ? "secondary" : "destructive"}
                   onClick={() => {}}
                 >
-                  {isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}
+                  {isCancelled ? "Re-activate Activity" : "Cancel Activity"}
                 </Button>
-                <Link to={`/manage/activityId`}>
+                <Link to={`/manage/${activity.id}`}>
                   <Button color="primary" disabled={isCancelled}>
                     Manage Event
                   </Button>
@@ -61,11 +61,11 @@ function ActivityDetailsHeader({ activity }: Props) {
             ) : (
               <Button
                 className={cn()}
-                variant={isGoing ? 'default' : 'outline'}
+                variant={isGoing ? "default" : "outline"}
                 onClick={() => {}}
                 disabled={isCancelled || loading}
               >
-                {isGoing ? 'Cancel Attendance' : 'Join Activity'}
+                {isGoing ? "Cancel Attendance" : "Join Activity"}
               </Button>
             )}
           </div>

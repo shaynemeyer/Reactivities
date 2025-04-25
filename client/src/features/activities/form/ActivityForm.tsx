@@ -20,21 +20,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useActivities } from "@/lib/hooks/useActivities";
+import { activitySchema, ActivitySchema } from "@/lib/schemas/activitySchema";
 import { formateDateForInput, generateUUID } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import { z } from "zod";
-
-const formSchema = z.object({
-  id: z.string().optional(),
-  title: z.string().min(2).max(100),
-  description: z.string().max(250),
-  category: z.string().min(2).max(50),
-  date: z.string().min(2),
-  city: z.string().min(2).max(75),
-  venue: z.string().optional(),
-});
+import { categoryOptions } from "./categoryOptions";
 
 function ActivityForm() {
   const { id } = useParams();
@@ -42,8 +33,9 @@ function ActivityForm() {
   const { updateActivity, createActivity, activity, isLoadingActivity } =
     useActivities(id);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ActivitySchema>({
+    mode: "onTouched",
+    resolver: zodResolver(activitySchema),
     defaultValues: {
       id: activity?.id || generateUUID(),
       title: activity?.title || "",
@@ -57,7 +49,7 @@ function ActivityForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: ActivitySchema) {
     if (activity) {
       values.id = activity.id;
       await updateActivity.mutateAsync(values as unknown as Activity);
@@ -122,15 +114,17 @@ function ActivityForm() {
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
-                      <SelectContent className="w-full">
-                        <SelectGroup>
+                      <SelectContent>
+                        <SelectGroup className="max-w-fit">
                           <SelectLabel>Categories</SelectLabel>
-                          <SelectItem value="culture">Culture</SelectItem>
-                          <SelectItem value="drinks">Drinks</SelectItem>
-                          <SelectItem value="film">Film</SelectItem>
-                          <SelectItem value="food">Food</SelectItem>
-                          <SelectItem value="music">Music</SelectItem>
-                          <SelectItem value="travel">Travel</SelectItem>
+                          {categoryOptions.map((category) => (
+                            <SelectItem
+                              key={category.value}
+                              value={category.value}
+                            >
+                              {category.text}
+                            </SelectItem>
+                          ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
