@@ -14,7 +14,7 @@ export const activitySchema = z.object({
     .string()
     .min(2, { message: "Category is required" })
     .max(50, { message: "Category should be less than 50 characters" }),
-  date: z.string().min(2, { message: "Date is required" }),
+  date: z.coerce.date({ message: "Date is required" }),
   city: z
     .string()
     .min(2, { message: "City is required" })

@@ -273,8 +273,8 @@ function Calendar({
     const startDate = new Date(today.getFullYear() - yearRange, 0, 1);
     if (props.month) {
       return (
-        props.month.getMonth() === startDate.getMonth() &&
-        props.month.getFullYear() === startDate.getFullYear()
+        props.month?.getMonth() === startDate.getMonth() &&
+        props.month?.getFullYear() === startDate.getFullYear()
       );
     }
     return false;
@@ -284,8 +284,8 @@ function Calendar({
     const endDate = new Date(today.getFullYear() + yearRange, 11, 31);
     if (props.month) {
       return (
-        props.month.getMonth() === endDate.getMonth() &&
-        props.month.getFullYear() === endDate.getFullYear()
+        props.month?.getMonth() === endDate.getMonth() &&
+        props.month?.getFullYear() === endDate.getFullYear()
       );
     }
     return false;

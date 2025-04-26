@@ -21,11 +21,12 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useActivities } from "@/lib/hooks/useActivities";
 import { activitySchema, ActivitySchema } from "@/lib/schemas/activitySchema";
-import { formateDateForInput, generateUUID } from "@/lib/utils";
+import { generateUUID } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { categoryOptions } from "./categoryOptions";
+import { DateTimePicker } from "@/components/DateTimePicker/DateTimePicker";
 
 function ActivityForm() {
   const { id } = useParams();
@@ -41,9 +42,7 @@ function ActivityForm() {
       title: activity?.title || "",
       description: activity?.description || "",
       category: activity?.category || "",
-      date: activity?.date
-        ? formateDateForInput(activity?.date)
-        : formateDateForInput(new Date().toString()),
+      date: activity?.date ? new Date(activity?.date) : new Date(),
       city: activity?.city || "",
       venue: activity?.venue || "",
     },
@@ -141,7 +140,13 @@ function ActivityForm() {
                 <FormItem>
                   <FormLabel>Date</FormLabel>
                   <FormControl>
-                    <Input placeholder="Date" type="date" {...field} />
+                    <DateTimePicker
+                      granularity="minute"
+                      hourCycle={12}
+                      placeholder="Date"
+                      value={field.value!}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
