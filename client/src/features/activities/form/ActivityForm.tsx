@@ -27,6 +27,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { categoryOptions } from "./categoryOptions";
 import { DateTimePicker } from "@/components/DateTimePicker/DateTimePicker";
+import { Activity } from "@/lib/types";
+import { router } from "@/app/router/Routes";
+import LocationInput from "@/components/Location/LocationInput";
 
 function ActivityForm() {
   const { id } = useParams();
@@ -155,26 +158,12 @@ function ActivityForm() {
 
             <FormField
               control={form.control}
-              name="city"
+              name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>City</FormLabel>
+                  <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <Input placeholder="City" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="venue"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Venue</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Venue" {...field} />
+                    <LocationInput />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -189,7 +178,12 @@ function ActivityForm() {
               >
                 Submit
               </Button>
-              <Button variant="ghost">Cancel</Button>
+              <Button
+                variant="ghost"
+                onClick={() => router.navigate("/activities")}
+              >
+                Cancel
+              </Button>
             </div>
           </form>
         </Form>

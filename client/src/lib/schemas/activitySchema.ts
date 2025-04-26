@@ -15,11 +15,12 @@ export const activitySchema = z.object({
     .min(2, { message: "Category is required" })
     .max(50, { message: "Category should be less than 50 characters" }),
   date: z.coerce.date({ message: "Date is required" }),
-  city: z
-    .string()
-    .min(2, { message: "City is required" })
-    .max(75, { message: "City should be less than 75 characters" }),
-  venue: z.string().optional(),
+  location: z.object({
+    venue: z.string().min(2, { message: "Venue is required" }),
+    city: z.string().optional(),
+    latitude: z.coerce.number(),
+    longitude: z.coerce.number(),
+  }),
 });
 
 export type ActivitySchema = z.infer<typeof activitySchema>;

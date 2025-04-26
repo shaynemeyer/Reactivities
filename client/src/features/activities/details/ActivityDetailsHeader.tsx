@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Activity } from "@/lib/types";
 import { cn, formatDateForDisplay } from "@/lib/utils";
 import { Link } from "react-router";
 
@@ -31,7 +32,7 @@ function ActivityDetailsHeader({ activity }: Props) {
           {/* Text Section */}
           <div className="flex flex-col bg-black/50 rounded-2xl p-3">
             <h2 className="font-bold">{activity.title}</h2>
-            <h5>{formatDateForDisplay(activity.date)}</h5>
+            <h5>{formatDateForDisplay(activity.date.toString())}</h5>
             <h5>
               Hosted by{" "}
               <Link
