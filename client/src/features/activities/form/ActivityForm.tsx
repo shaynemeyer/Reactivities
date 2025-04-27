@@ -27,7 +27,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { categoryOptions } from "./categoryOptions";
 import { DateTimePicker } from "@/components/DateTimePicker/DateTimePicker";
-// import { Activity } from "@/lib/types";
+import { Activity } from "@/lib/types";
 import { router } from "@/app/router/Routes";
 import LocationInput from "@/components/Location/LocationInput";
 
@@ -56,18 +56,23 @@ function ActivityForm() {
   });
 
   async function onSubmit(values: ActivitySchema) {
-    console.log(values);
-    // if (activity) {
-    //   values.id = activity.id;
-    //   await updateActivity.mutateAsync(values as unknown as Activity);
-    //   navigate(`/activities/${activity.id}`);
-    // } else {
-    //   createActivity.mutate(values as unknown as Activity, {
-    //     onSuccess: (id) => {
-    //       navigate(`/activities/${id}`);
-    //     },
-    //   });
-    // }
+    const { location, ...rest } = values;
+    const flattenedData = { ...rest, ...location };
+
+    try {
+      if (activity) {
+        flattenedData.id = activity.id;
+        await updateActivity.mutateAsync(flattenedData as unknown as Activity, {
+          onSuccess: () => navigate(`/activities/${activity.id}`),
+        });
+      } else {
+        createActivity.mutate(flattenedData as unknown as Activity, {
+          onSuccess: (id) => navigate(`/activities/${id}`),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (isLoadingActivity) return <h5>Loading activity...</h5>;

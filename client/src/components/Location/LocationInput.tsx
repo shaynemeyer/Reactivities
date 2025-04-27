@@ -61,7 +61,6 @@ function LocationInput<T extends FieldValues>(props: Props<T>) {
   };
 
   const handleSelect = (location: LocationIQSuggestion) => {
-    console.log({ location });
     const city =
       location.address?.city ||
       location.address?.town ||
