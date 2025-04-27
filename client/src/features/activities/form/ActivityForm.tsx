@@ -27,7 +27,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { categoryOptions } from "./categoryOptions";
 import { DateTimePicker } from "@/components/DateTimePicker/DateTimePicker";
-import { Activity } from "@/lib/types";
+// import { Activity } from "@/lib/types";
 import { router } from "@/app/router/Routes";
 import LocationInput from "@/components/Location/LocationInput";
 
@@ -46,23 +46,28 @@ function ActivityForm() {
       description: activity?.description || "",
       category: activity?.category || "",
       date: activity?.date ? new Date(activity?.date) : new Date(),
-      city: activity?.city || "",
-      venue: activity?.venue || "",
+      location: {
+        venue: activity?.venue || "",
+        city: activity?.city || "",
+        longitude: activity?.longitude || -74.013029,
+        latitude: activity?.latitude || 40.710937,
+      },
     },
   });
 
   async function onSubmit(values: ActivitySchema) {
-    if (activity) {
-      values.id = activity.id;
-      await updateActivity.mutateAsync(values as unknown as Activity);
-      navigate(`/activities/${activity.id}`);
-    } else {
-      createActivity.mutate(values as unknown as Activity, {
-        onSuccess: (id) => {
-          navigate(`/activities/${id}`);
-        },
-      });
-    }
+    console.log(values);
+    // if (activity) {
+    //   values.id = activity.id;
+    //   await updateActivity.mutateAsync(values as unknown as Activity);
+    //   navigate(`/activities/${activity.id}`);
+    // } else {
+    //   createActivity.mutate(values as unknown as Activity, {
+    //     onSuccess: (id) => {
+    //       navigate(`/activities/${id}`);
+    //     },
+    //   });
+    // }
   }
 
   if (isLoadingActivity) return <h5>Loading activity...</h5>;
@@ -163,7 +168,7 @@ function ActivityForm() {
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <LocationInput />
+                    <LocationInput {...field} label="Enter a location" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
