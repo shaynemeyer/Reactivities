@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -7,22 +7,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useAccount } from '@/lib/hooks/useAccount';
-import { loginSchema, LoginSchema } from '@/lib/schemas/loginSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useAccount } from "@/lib/hooks/useAccount";
+import { loginSchema, LoginSchema } from "@/lib/schemas/loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LockOpen } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 function LoginForm() {
   const { loginUser } = useAccount();
 
   const form = useForm<LoginSchema>({
-    mode: 'onTouched',
+    mode: "onTouched",
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -33,8 +34,13 @@ function LoginForm() {
 
   return (
     <div className="flex items-center justify-center mt-60">
-      <Card className="w-[500px]">
+      <Card className="w-[400px]">
         <CardContent>
+          <div className="justify-center items-center mb-4 flex">
+            <LockOpen className="mr-3" />
+            <h1>Sign in</h1>
+          </div>
+
           <Form {...form}>
             <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
@@ -68,7 +74,11 @@ function LoginForm() {
                 )}
               />
 
-              <Button type="submit" size="sm" className="w-full">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={loginUser.isPending}
+              >
                 Login
               </Button>
             </form>
