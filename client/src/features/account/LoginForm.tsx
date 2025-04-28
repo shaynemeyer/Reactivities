@@ -14,9 +14,12 @@ import { loginSchema, LoginSchema } from "@/lib/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockOpen } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router";
 
 function LoginForm() {
   const { loginUser } = useAccount();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const form = useForm<LoginSchema>({
     mode: "onTouched",
@@ -28,8 +31,11 @@ function LoginForm() {
   });
 
   const onSubmit = async (data: LoginSchema) => {
-    console.log({ data });
-    // await loginUser.mutateAsync(data);
+    await loginUser.mutateAsync(data, {
+      onSuccess: () => {
+        navigate(location.state?.from || "/activities");
+      },
+    });
   };
 
   return (

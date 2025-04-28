@@ -27,7 +27,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { categoryOptions } from "./categoryOptions";
 import { DateTimePicker } from "@/components/DateTimePicker/DateTimePicker";
-import { Activity } from "@/lib/types";
 import { router } from "@/app/router/Routes";
 import LocationInput from "@/components/Location/LocationInput";
 

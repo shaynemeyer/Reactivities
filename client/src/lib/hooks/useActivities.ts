@@ -1,50 +1,51 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import agent from '../api/agent';
-import { useLocation } from 'react-router';
-import { Activity } from '../types';
+import agent from "../api/agent";
+import { useLocation } from "react-router";
+import { useAccount } from "./useAccount";
 
 export const useActivities = (id?: string) => {
   const queryClient = useQueryClient();
+  const { currentUser } = useAccount();
   const location = useLocation();
 
   const { data: activities, isPending } = useQuery({
-    queryKey: ['activities'],
+    queryKey: ["activities"],
     queryFn: async () => {
-      const response = await agent.get<Activity[]>('/activities');
+      const response = await agent.get<Activity[]>("/activities");
       return response.data;
     },
-    enabled: !id && location.pathname === '/activities',
+    enabled: !id && location.pathname === "/activities" && !!currentUser,
   });
 
   const { data: activity, isLoading: isLoadingActivity } = useQuery({
-    queryKey: ['activities', id],
+    queryKey: ["activities", id],
     queryFn: async () => {
       const response = await agent.get<Activity>(`/activities/${id}`);
       return response.data;
     },
-    enabled: !!id,
+    enabled: !!id && !!currentUser,
   });
 
   const updateActivity = useMutation({
     mutationFn: async (activity: Activity) => {
-      await agent.put('/activities', activity);
+      await agent.put("/activities", activity);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['activities'],
+        queryKey: ["activities"],
       });
     },
   });
 
   const createActivity = useMutation({
     mutationFn: async (activity: Activity) => {
-      const response = await agent.post('/activities', activity);
+      const response = await agent.post("/activities", activity);
       return response.data;
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['activities'],
+        queryKey: ["activities"],
       });
     },
   });
@@ -55,7 +56,7 @@ export const useActivities = (id?: string) => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['activities'],
+        queryKey: ["activities"],
       });
     },
   });
