@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { format } from "date-fns/format";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,3 +26,8 @@ export function generateUUID() {
     return v.toString(16);
   });
 }
+
+export const requiredString = (fieldName: string) =>
+  z
+    .string({ required_error: `${fieldName} is required` })
+    .min(1, { message: `${fieldName} is required` });

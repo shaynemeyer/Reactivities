@@ -10,32 +10,27 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAccount } from "@/lib/hooks/useAccount";
-import { loginSchema, LoginSchema } from "@/lib/schemas/loginSchema";
+import { registerSchema, RegisterSchema } from "@/lib/schemas/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockOpen } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link } from "react-router";
 
-function LoginForm() {
-  const { loginUser } = useAccount();
-  const navigate = useNavigate();
-  const location = useLocation();
+function RegisterForm() {
+  const { registerUser } = useAccount();
 
-  const form = useForm<LoginSchema>({
+  const form = useForm<RegisterSchema>({
     mode: "onTouched",
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(registerSchema),
     defaultValues: {
+      displayName: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: LoginSchema) => {
-    await loginUser.mutateAsync(data, {
-      onSuccess: () => {
-        navigate(location.state?.from || "/activities");
-      },
-    });
+  const onSubmit = async (data: RegisterSchema) => {
+    await registerUser.mutateAsync(data);
   };
 
   return (
@@ -44,11 +39,24 @@ function LoginForm() {
         <CardContent>
           <div className="justify-center items-center mb-4 flex">
             <LockOpen className="mr-3" />
-            <h1>Sign in</h1>
+            <h1>Register</h1>
           </div>
 
           <Form {...form}>
             <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="displayName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Display name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Display name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -83,14 +91,14 @@ function LoginForm() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={loginUser.isPending}
+                disabled={registerUser.isPending}
               >
-                Login
+                Register
               </Button>
               <p className="text-center">
-                Don't have an account?{" "}
-                <Link to="/register" className="text-primary hover:underline">
-                  Sign up
+                Already have an account?{" "}
+                <Link to="/login" className="text-primary hover:underline">
+                  Sign in
                 </Link>
               </p>
             </form>
@@ -101,4 +109,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;
