@@ -30,7 +30,19 @@ function RegisterForm() {
   });
 
   const onSubmit = async (data: RegisterSchema) => {
-    await registerUser.mutateAsync(data);
+    await registerUser.mutateAsync(data, {
+      onError: (error) => {
+        if (Array.isArray(error)) {
+          error.forEach((err) => {
+            if (err.includes("Email")) {
+              form.setError("email", { message: err });
+            } else if (err.includes("Password")) {
+              form.setError("password", { message: err });
+            }
+          });
+        }
+      },
+    });
   };
 
   return (
