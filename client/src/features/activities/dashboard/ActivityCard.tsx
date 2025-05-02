@@ -1,9 +1,9 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDateForDisplay } from "@/lib/utils";
-import { Clock4, MapPin, User } from "lucide-react";
+import { Clock4, MapPin, User, UserRound } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 
 type Props = {
@@ -13,11 +13,6 @@ type Props = {
 
 function ActivityCard({ activity }: Props) {
   const navigate = useNavigate();
-
-  const isHost = false;
-  const isGoing = false;
-  // const label = isHost ? "You are hosting" : "You are going";
-  const isCancelled = false;
 
   return (
     <Card className="rounded-md mb-4" key={activity.id}>
@@ -33,14 +28,17 @@ function ActivityCard({ activity }: Props) {
               <div>
                 <h3>{activity.title}</h3>
                 <span className="text-xs text-gray-400">
-                  Hosted by <Link to={`/profiles/bob`}>Bob</Link>
+                  Hosted by{" "}
+                  <Link to={`/profiles/${activity.hostId}`}>
+                    {activity.hostDisplayName}
+                  </Link>
                 </span>
               </div>
             </div>
             <div className="flex flex-col gap-2 mr-2">
-              {isHost && <Badge variant="secondary">Hosting</Badge>}
-              {isGoing && <Badge variant="default">Going</Badge>}
-              {isCancelled && (
+              {activity.isHost && <Badge variant="secondary">Hosting</Badge>}
+              {activity.isGoing && <Badge variant="default">Going</Badge>}
+              {activity.isCancelled && (
                 <Badge variant="destructive" className="rounded-xl bg-gray-100">
                   Cancelled
                 </Badge>
@@ -54,7 +52,7 @@ function ActivityCard({ activity }: Props) {
         <div className="flex gap-1">
           <Clock4 />
           <h5 className="text-gray-500 mb-3">
-            {formatDateForDisplay(activity.date)}
+            {formatDateForDisplay(activity.date?.toString())}
           </h5>
         </div>
         <div className="flex gap-1">
@@ -62,7 +60,16 @@ function ActivityCard({ activity }: Props) {
           {activity.venue}
         </div>
       </CardContent>
-      <CardContent className="bg-gray-100 py-3">Attendees go here</CardContent>
+      <CardContent className="bg-gray-100 py-3 flex gap-1">
+        {activity.attendees.map((att) => (
+          <Avatar>
+            <AvatarImage src={att.imageUrl} alt={att.displayName} />
+            <AvatarFallback className="bg-gray-600 text-white">
+              <UserRound />
+            </AvatarFallback>
+          </Avatar>
+        ))}
+      </CardContent>
       <CardContent className="flex justify-between">
         <p>{activity.description}</p>
         <Button
