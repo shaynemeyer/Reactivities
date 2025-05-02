@@ -22,14 +22,18 @@ function ActivityDetailsSidebar({ activity }: Props) {
           {activity.attendees.map((attendee) => (
             <div className="flex gap-4 justify-between" key={attendee.id}>
               <div className="flex content-center align-middle items-center">
-                <Avatar className="mr-2">
+                <Avatar className="mr-2 w-[50px] h-[50px] rounded-md my-1">
                   <AvatarImage
                     src={attendee.imageUrl}
                     alt={attendee.displayName}
-                    className="w-[100px] h-[100px] rounded-2xl"
+                    className="w-[100px] rounded-2xl"
                   />
                   <AvatarFallback>
-                    <UserRound className="w-[100px] h-[100px] rounded-2xl" />
+                    <img
+                      src="/images/user.png"
+                      alt="user default"
+                      className="w-[100px] rounded"
+                    />
                   </AvatarFallback>
                 </Avatar>
                 <div>
