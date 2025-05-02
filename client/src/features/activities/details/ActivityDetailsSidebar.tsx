@@ -11,7 +11,6 @@ type Props = {
 function ActivityDetailsSidebar({ activity }: Props) {
   const following = true;
 
-  console.log({ activity });
   return (
     <>
       <Card className="pt-0">

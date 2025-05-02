@@ -1,7 +1,7 @@
 import Map from "@/components/Maps/Map";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Activity } from "@/lib/types";
+
 import { formatDateForDisplay } from "@/lib/utils";
 import { Calendar, Info, MapPin } from "lucide-react";
 import { useState } from "react";
