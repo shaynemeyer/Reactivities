@@ -10,16 +10,15 @@ function ProfileCard({ profile }: Props) {
   const following = false;
 
   return (
-    <div className="m-w-[200px] mt-0 p-0">
+    <div className="m-w-[200px] mt-0 p-0 items-center justify-center">
       <Link to={`/profiles/${profile.id}`} className="no-underline">
-        <div>
+        <div className="max-w-55 items-center">
           <img
             src={profile.imageUrl || "/images/user.png"}
             alt={profile.displayName}
-            className="max-w-52"
           />
 
-          <div className="flex items-center gap-1 text-black">
+          <div className="flex items-center gap-1 text-black my-2">
             <h5>{profile.displayName}</h5>
             {following && (
               <Badge variant="outline" color="secodary">

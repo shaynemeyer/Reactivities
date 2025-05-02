@@ -31,7 +31,10 @@ function ActivityDetailsInfo({ activity }: Props) {
             {activity.venue}, {activity.city}
           </span>
         </div>
-        <Button onClick={() => setMapOpen(!mapOpen)} className="">
+        <Button
+          onClick={() => setMapOpen(!mapOpen)}
+          className="whitespace-nowrap"
+        >
           {mapOpen ? "Hide map" : "Show map"}
         </Button>
       </CardContent>

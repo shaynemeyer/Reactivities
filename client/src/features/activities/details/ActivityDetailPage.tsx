@@ -22,7 +22,7 @@ function ActivityDetailPage() {
         <ActivityDetailsChat />
       </div>
       <div className="col-span-4">
-        <ActivityDetailsSidebar />
+        <ActivityDetailsSidebar activity={activity} />
       </div>
     </div>
   );
