@@ -1,7 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn, formatDateForDisplay } from "@/lib/utils";
+import { useActivities } from "@/lib/hooks/useActivities";
+import { formatDateForDisplay } from "@/lib/utils";
 import { Link } from "react-router";
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
 };
 
 function ActivityDetailsHeader({ activity }: Props) {
-  const loading = false;
+  const { updateAttendance } = useActivities(activity.id);
 
   return (
     <Card className="pt-0 bg-transparent pb-0 relative overflow-hidden mb-2">
@@ -45,7 +46,8 @@ function ActivityDetailsHeader({ activity }: Props) {
               <>
                 <Button
                   variant={activity.isCancelled ? "secondary" : "destructive"}
-                  onClick={() => {}}
+                  onClick={() => updateAttendance.mutate(activity.id)}
+                  disabled={updateAttendance.isPending}
                 >
                   {activity.isCancelled
                     ? "Re-activate Activity"
@@ -59,10 +61,9 @@ function ActivityDetailsHeader({ activity }: Props) {
               </>
             ) : (
               <Button
-                className={cn()}
-                variant={activity.isGoing ? "default" : "outline"}
-                onClick={() => {}}
-                disabled={loading}
+                variant={activity.isGoing ? "default" : "secondary"}
+                onClick={() => updateAttendance.mutate(activity.id)}
+                disabled={updateAttendance.isPending || activity.isCancelled}
               >
                 {activity.isGoing ? "Cancel Attendance" : "Join Activity"}
               </Button>
