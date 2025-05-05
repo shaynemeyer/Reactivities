@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,6 +18,10 @@ function UserMenu() {
       <DropdownMenuTrigger asChild>
         <div className="flex flex-row items-center gap-2 mr-4 bg-transparent">
           <Avatar>
+            <AvatarImage
+              src={currentUser?.imageUrl}
+              alt={currentUser?.displayName}
+            />
             <AvatarFallback className="text-white bg-green-500">
               <User />
             </AvatarFallback>
@@ -39,7 +43,7 @@ function UserMenu() {
         <DropdownMenuItem>
           <Button
             size="sm"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate(`/profiles/${currentUser?.id}`)}
             variant="link"
             className="hover:no-underline hover: cursor-pointer text-black"
           >

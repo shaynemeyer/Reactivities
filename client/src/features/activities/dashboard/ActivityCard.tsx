@@ -23,6 +23,10 @@ function ActivityCard({ activity }: Props) {
             <div className="flex items-center justify-between gap-2">
               <Avatar className="h-15 w-15">
                 <AvatarFallback>
+                  <AvatarImage
+                    src={activity.hostImageUrl}
+                    alt={activity.hostDisplayName}
+                  />
                   <User className="h-12 w-12" />
                 </AvatarFallback>
               </Avatar>
