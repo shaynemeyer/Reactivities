@@ -1,9 +1,13 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-function ProfileHeader() {
+type Props = {
+  profile: Profile;
+};
+
+function ProfileHeader({ profile }: Props) {
   const isFollowing = true;
 
   return (
@@ -12,12 +16,16 @@ function ProfileHeader() {
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-9 flex flex-row gap-4 items-center">
             <Avatar className="w-[150px] h-[150px]">
+              <AvatarImage
+                src={profile.imageUrl}
+                alt={`${profile.displayName} image`}
+              />
               <AvatarFallback>
                 <img src="/images/user.png" alt="some placeholder" />
               </AvatarFallback>
             </Avatar>
             <div>
-              <h4 className="text-4xl">Display name</h4>
+              <h4 className="text-4xl">{profile.displayName}</h4>
               {isFollowing && (
                 <Badge
                   variant="outline"
