@@ -31,7 +31,7 @@ public class AddPhoto
                 Url = uploadResult.Url,
                 PublicId = uploadResult.PublicId,
                 UserId = user.Id,
-            }
+            };
 
             user.ImageUrl ??= photo.Url;
 
