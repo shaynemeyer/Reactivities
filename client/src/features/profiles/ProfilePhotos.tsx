@@ -1,6 +1,7 @@
 import PhotoUploadWidget from "@/components/Photos/PhotoUploadWidget";
 import { Button } from "@/components/ui/button";
 import { useProfile } from "@/lib/hooks/useProfile";
+import { CirclePlus, CircleX } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router";
 
@@ -19,8 +20,21 @@ function ProfilePhotos() {
       <div>
         {isCurrentUser && (
           <div>
-            <Button onClick={() => setEditMode(!editMode)} variant="secondary">
-              {editMode ? "Cancel" : "Add photo"}
+            <Button
+              onClick={() => setEditMode(!editMode)}
+              variant="ghost"
+              className="mb-2"
+            >
+              {editMode ? (
+                <div className="flex gap-1 items-center">
+                  <CircleX /> Cancel
+                </div>
+              ) : (
+                <div className="flex gap-1 items-center">
+                  <CirclePlus />
+                  Add photo
+                </div>
+              )}
             </Button>
           </div>
         )}
