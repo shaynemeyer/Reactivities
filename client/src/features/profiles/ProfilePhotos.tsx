@@ -7,8 +7,16 @@ import { useParams } from "react-router";
 
 function ProfilePhotos() {
   const { id } = useParams();
-  const { photos, loadingPhotos, isCurrentUser } = useProfile(id);
+  const { photos, loadingPhotos, isCurrentUser, uploadPhoto } = useProfile(id);
   const [editMode, setEditMode] = useState(false);
+
+  const handlePhotoUpload = (file: Blob) => {
+    uploadPhoto.mutate(file, {
+      onSuccess: () => {
+        setEditMode(false);
+      },
+    });
+  };
 
   if (loadingPhotos) return <h1>Loading photos...</h1>;
 
@@ -20,11 +28,7 @@ function ProfilePhotos() {
       <div>
         {isCurrentUser && (
           <div>
-            <Button
-              onClick={() => setEditMode(!editMode)}
-              variant="ghost"
-              className="mb-2"
-            >
+            <Button onClick={() => setEditMode(!editMode)} variant="ghost">
               {editMode ? (
                 <div className="flex gap-1 items-center">
                   <CircleX /> Cancel
@@ -39,7 +43,10 @@ function ProfilePhotos() {
           </div>
         )}
         {editMode ? (
-          <PhotoUploadWidget />
+          <PhotoUploadWidget
+            uploadPhoto={handlePhotoUpload}
+            loading={uploadPhoto.isPending}
+          />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {photos.map((photo) => (
