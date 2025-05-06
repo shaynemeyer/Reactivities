@@ -17,7 +17,7 @@ function ProfileContent() {
         <Tabs
           orientation="vertical"
           defaultValue="About"
-          className="max-w-md w-full flex items-start flex-row gap-4 justify-center"
+          className="w-full flex items-start flex-row gap-4"
         >
           <TabsList className="shrink-0 grid grid-cols-1 h-auto gap-1 w-[130px]">
             {tabContent.map((item) => (
@@ -30,9 +30,13 @@ function ProfileContent() {
               </TabsTrigger>
             ))}
           </TabsList>
-          <div className="h-full w-full flex items-center justify-center max-w-xs mt-2  font-medium text-muted-foreground">
+          <div className="h-full w-full flex items-center justify-center mt-2  font-medium text-muted-foreground">
             {tabContent.map((item) => (
-              <TabsContent key={item.label} value={item.label}>
+              <TabsContent
+                key={item.label}
+                value={item.label}
+                className="w-full"
+              >
                 {item.content}
               </TabsContent>
             ))}

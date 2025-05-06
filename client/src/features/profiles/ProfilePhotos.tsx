@@ -1,3 +1,4 @@
+import PhotoUploadWidget from "@/components/Photos/PhotoUploadWidget";
 import { Button } from "@/components/ui/button";
 import { useProfile } from "@/lib/hooks/useProfile";
 import { useState } from "react";
@@ -24,7 +25,7 @@ function ProfilePhotos() {
           </div>
         )}
         {editMode ? (
-          <div>Photo widget goes here</div>
+          <PhotoUploadWidget />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {photos.map((photo) => (
