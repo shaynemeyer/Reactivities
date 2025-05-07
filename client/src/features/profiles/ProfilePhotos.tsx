@@ -1,3 +1,4 @@
+import DeleteButton from "@/components/Buttons/DeleteButton";
 import PhotoUploadWidget from "@/components/Photos/PhotoUploadWidget";
 import StarButton from "@/components/Photos/StarButton";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ function ProfilePhotos() {
     uploadPhoto,
     profile,
     setMainPhoto,
+    deletePhoto,
   } = useProfile(id);
   const [editMode, setEditMode] = useState(false);
 
@@ -33,8 +35,9 @@ function ProfilePhotos() {
   return (
     <>
       <div>
-        {isCurrentUser && (
-          <div>
+        <div className="flex justify-between">
+          <h5 className="text-2xl">Photos</h5>
+          {isCurrentUser && (
             <Button onClick={() => setEditMode(!editMode)} variant="ghost">
               {editMode ? (
                 <div className="flex gap-1 items-center">
@@ -47,8 +50,9 @@ function ProfilePhotos() {
                 </div>
               )}
             </Button>
-          </div>
-        )}
+          )}
+        </div>
+
         {editMode ? (
           <PhotoUploadWidget
             uploadPhoto={handlePhotoUpload}
@@ -70,11 +74,21 @@ function ProfilePhotos() {
                   className="aspect-square object-cover rounded-lg overflow-hidden w-full"
                 />
                 {isCurrentUser && (
-                  <div
-                    className="absolute end-0 top-0"
-                    onClick={() => setMainPhoto.mutate(photo)}
-                  >
-                    <StarButton selected={photo.url === profile?.imageUrl} />
+                  <div>
+                    <div
+                      className="absolute start-0 top-0"
+                      onClick={() => setMainPhoto.mutate(photo)}
+                    >
+                      <StarButton selected={photo.url === profile?.imageUrl} />
+                    </div>
+                    {profile?.imageUrl !== photo.url && (
+                      <div
+                        className="absolute end-0 top-0"
+                        onClick={() => deletePhoto.mutate(photo.id)}
+                      >
+                        <DeleteButton />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
