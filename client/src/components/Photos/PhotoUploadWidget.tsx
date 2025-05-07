@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { CloudUpload, Upload } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -14,6 +14,13 @@ type Props = {
 function PhotoUploadWidget({ uploadPhoto, loading }: Props) {
   const [files, setFiles] = useState<object & { preview: string }[]>([]);
   const cropperRef = useRef<ReactCropperElement>(null);
+
+  // Cleanup to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    };
+  }, [files]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(

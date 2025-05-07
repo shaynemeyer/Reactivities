@@ -18,8 +18,13 @@ function ProfileCard({ profile }: Props) {
             alt={profile.displayName}
           />
 
-          <div className="flex items-center gap-1 text-black my-2">
+          <div className="flex items-center gap-1 text-black my-2 flex-col">
             <h5>{profile.displayName}</h5>
+            {profile?.bio && (
+              <p className="text-ellipsis overflow-hidden whitespace-nowrap">
+                {profile?.bio}
+              </p>
+            )}
             {following && (
               <Badge variant="outline" color="secodary">
                 Following

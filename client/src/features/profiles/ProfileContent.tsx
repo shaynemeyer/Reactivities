@@ -1,10 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfilePhotos from "./ProfilePhotos";
+import ProfileAbout from "./ProfileAbout";
 
 function ProfileContent() {
   const tabContent = [
-    { label: "About", content: <div>About</div> },
+    { label: "About", content: <ProfileAbout /> },
     { label: "Photos", content: <ProfilePhotos /> },
     { label: "Events", content: <div>Events</div> },
     { label: "Followers", content: <div>Followers</div> },

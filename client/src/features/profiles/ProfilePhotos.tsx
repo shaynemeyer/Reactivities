@@ -38,7 +38,11 @@ function ProfilePhotos() {
         <div className="flex justify-between">
           <h5 className="text-2xl">Photos</h5>
           {isCurrentUser && (
-            <Button onClick={() => setEditMode(!editMode)} variant="ghost">
+            <Button
+              title={editMode ? "Cancel" : "Add photo"}
+              onClick={() => setEditMode(!editMode)}
+              variant={editMode ? "ghost" : "default"}
+            >
               {editMode ? (
                 <div className="flex gap-1 items-center">
                   <CircleX /> Cancel
