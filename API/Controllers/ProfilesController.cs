@@ -9,6 +9,12 @@ namespace API.Controllers;
 
 public class ProfilesController : BaseApiController
 {
+    [HttpPut]
+    public async Task<ActionResult> UpdateProfile(EditProfile.Command command)
+    {
+        return HandleResult(await Mediator.Send(command));
+    }
+
     [HttpPost("add-photo")]
     public async Task<ActionResult<Photo>> AddPhoto(IFormFile file)
     {
