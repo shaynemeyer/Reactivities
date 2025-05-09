@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { DateArg, formatDistanceToNow } from "date-fns";
 import { format } from "date-fns/format";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
@@ -31,3 +32,7 @@ export const requiredString = (fieldName: string) =>
   z
     .string({ required_error: `${fieldName} is required` })
     .min(1, { message: `${fieldName} is required` });
+
+export function timeAgo(date: DateArg<Date>) {
+  return formatDistanceToNow(date) + " ago";
+}
