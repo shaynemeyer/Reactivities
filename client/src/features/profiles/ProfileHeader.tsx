@@ -2,12 +2,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useProfile } from "@/lib/hooks/useProfile";
+import { useParams } from "react-router";
 
-type Props = {
-  profile: Profile;
-};
+function ProfileHeader() {
+  const { id } = useParams();
+  const { isCurrentUser, profile, updateFollowing } = useProfile(id);
 
-function ProfileHeader({ profile }: Props) {
+  if (!profile) return null;
+
   return (
     <Card>
       <CardContent>
@@ -46,10 +49,19 @@ function ProfileHeader({ profile }: Props) {
                   <h3>{profile.followingCount}</h3>
                 </div>
               </div>
-              <hr className="my-2" />
-              <Button className="w-full" variant="outline">
-                {profile.following ? "Unfollow" : "Follow"}
-              </Button>
+              {!isCurrentUser && (
+                <>
+                  <hr className="my-2" />
+                  <Button
+                    className="w-full"
+                    variant="outline"
+                    disabled={updateFollowing.isPending}
+                    onClick={() => updateFollowing.mutate()}
+                  >
+                    {profile.following ? "Unfollow" : "Follow"}
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>

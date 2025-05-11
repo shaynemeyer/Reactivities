@@ -14,7 +14,7 @@ function ProfilePage() {
   return (
     <div>
       <div>
-        <ProfileHeader profile={profile} />
+        <ProfileHeader />
         <ProfileContent />
       </div>
     </div>

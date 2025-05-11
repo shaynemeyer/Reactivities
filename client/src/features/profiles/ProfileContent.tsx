@@ -2,14 +2,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfilePhotos from "./ProfilePhotos";
 import ProfileAbout from "./ProfileAbout";
+import { useState } from "react";
+import ProfileFollowings from "./ProfileFollowings";
 
 function ProfileContent() {
+  const [selectedTab, setSelectedTab] = useState(0);
+
   const tabContent = [
     { label: "About", content: <ProfileAbout /> },
     { label: "Photos", content: <ProfilePhotos /> },
     { label: "Events", content: <div>Events</div> },
-    { label: "Followers", content: <div>Followers</div> },
-    { label: "Following", content: <div>Following</div> },
+    {
+      label: "Followers",
+      content: <ProfileFollowings activeTab={selectedTab} />,
+    },
+    {
+      label: "Following",
+      content: <ProfileFollowings activeTab={selectedTab} />,
+    },
   ];
 
   return (
@@ -21,11 +31,12 @@ function ProfileContent() {
           className="w-full flex items-start flex-row gap-4"
         >
           <TabsList className="shrink-0 grid grid-cols-1 h-auto gap-1 w-[130px]">
-            {tabContent.map((item) => (
+            {tabContent.map((item, idx) => (
               <TabsTrigger
                 value={item.label}
                 key={item.label}
                 className="py-1.5"
+                onClick={() => setSelectedTab(idx)}
               >
                 {item.label}
               </TabsTrigger>
