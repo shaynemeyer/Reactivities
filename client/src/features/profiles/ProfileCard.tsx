@@ -7,8 +7,6 @@ type Props = {
 };
 
 function ProfileCard({ profile }: Props) {
-  const following = false;
-
   return (
     <div className="m-w-[200px] mt-0 p-0 items-center justify-center">
       <Link to={`/profiles/${profile.id}`} className="no-underline">
@@ -16,6 +14,9 @@ function ProfileCard({ profile }: Props) {
           <img
             src={profile.imageUrl || "/images/user.png"}
             alt={profile.displayName}
+            className={`border-secondary ${
+              profile.following ? "border-2" : "border-0"
+            }`}
           />
 
           <div className="flex items-center gap-1 text-black my-2 flex-col">
@@ -25,7 +26,7 @@ function ProfileCard({ profile }: Props) {
                 {profile?.bio}
               </p>
             )}
-            {following && (
+            {profile.following && (
               <Badge variant="outline" color="secodary">
                 Following
               </Badge>
@@ -35,7 +36,7 @@ function ProfileCard({ profile }: Props) {
           <hr className="mb-2" />
           <div className="flex items-center justify-start text-black">
             <User />
-            <span className="ml-1">20 followers</span>
+            <span className="ml-1">{profile.followersCount} followers</span>
           </div>
         </div>
       </Link>

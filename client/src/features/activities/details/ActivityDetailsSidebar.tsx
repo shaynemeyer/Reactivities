@@ -9,8 +9,6 @@ type Props = {
 };
 
 function ActivityDetailsSidebar({ activity }: Props) {
-  const following = true;
-
   return (
     <>
       <Card className="pt-0">
@@ -42,7 +40,9 @@ function ActivityDetailsSidebar({ activity }: Props) {
                       {attendee.displayName}
                     </Link>
                   </p>
-                  {following && <p className="text-orange-500">Following</p>}
+                  {attendee.following && (
+                    <p className="text-orange-500">Following</p>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col items-end gap-1">

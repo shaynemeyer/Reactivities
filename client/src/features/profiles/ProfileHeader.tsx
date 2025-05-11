@@ -8,8 +8,6 @@ type Props = {
 };
 
 function ProfileHeader({ profile }: Props) {
-  const isFollowing = true;
-
   return (
     <Card>
       <CardContent>
@@ -26,7 +24,7 @@ function ProfileHeader({ profile }: Props) {
             </Avatar>
             <div>
               <h4 className="text-4xl">{profile.displayName}</h4>
-              {isFollowing && (
+              {profile.following && (
                 <Badge
                   variant="outline"
                   className="w-full rounded-xl py-1 mt-3"
@@ -41,16 +39,16 @@ function ProfileHeader({ profile }: Props) {
               <div className="flex justify-around w-[100%]">
                 <div className="text-center text-3xl">
                   <h6>Followers</h6>
-                  <h3>5</h3>
+                  <h3>{profile.followersCount}</h3>
                 </div>
                 <div className="text-center text-3xl">
                   <h6>Following</h6>
-                  <h3>25</h3>
+                  <h3>{profile.followingCount}</h3>
                 </div>
               </div>
               <hr className="my-2" />
               <Button className="w-full" variant="outline">
-                {isFollowing ? "Unfollow" : "Follow"}
+                {profile.following ? "Unfollow" : "Follow"}
               </Button>
             </div>
           </div>
