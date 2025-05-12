@@ -1,17 +1,24 @@
-import { useActivities } from '@/lib/hooks/useActivities';
-import ActivityCard from './ActivityCard';
+import { useActivities } from "@/lib/hooks/useActivities";
+import ActivityCard from "./ActivityCard";
+import { Fragment } from "react/jsx-runtime";
 
 function ActivityList() {
-  const { activities, isPending } = useActivities();
+  const { activitiesGroup, isLoading } = useActivities();
 
-  if (!activities || isPending) <h5>Loading...</h5>;
+  if (isLoading) <h5>Loading...</h5>;
+
+  if (!activitiesGroup) return <h4>No activities found.</h4>;
 
   return (
-    <>
-      {activities?.map((activity) => (
-        <ActivityCard key={activity.id} activity={activity} />
+    <div className="flex flex-col gap-3">
+      {activitiesGroup.pages.map((activities, index) => (
+        <Fragment key={index}>
+          {activities?.items.map((activity) => (
+            <ActivityCard key={activity.id} activity={activity} />
+          ))}
+        </Fragment>
       ))}
-    </>
+    </div>
   );
 }
 export default ActivityList;
