@@ -12,7 +12,7 @@ function App() {
       ) : (
         <>
           <NavBar />
-          <section className="mx-4 mt-4">
+          <section className="mx-4 pt-20">
             <Outlet />
           </section>
         </>

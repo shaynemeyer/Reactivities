@@ -19,7 +19,7 @@ function ActivityDashboard() {
           Load more
         </Button>
       </div>
-      <div className="col-span-3">
+      <div className="col-span-3 sticky top-20 self-start">
         <ActivityFilters />
       </div>
     </div>
