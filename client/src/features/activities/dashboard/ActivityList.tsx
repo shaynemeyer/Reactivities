@@ -1,22 +1,37 @@
 import { useActivities } from "@/lib/hooks/useActivities";
 import ActivityCard from "./ActivityCard";
-import { Fragment } from "react/jsx-runtime";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 function ActivityList() {
-  const { activitiesGroup, isLoading } = useActivities();
+  const { activitiesGroup, isLoading, hasNextPage, fetchNextPage } =
+    useActivities();
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, inView]);
 
   if (isLoading) <h5>Loading...</h5>;
 
   if (!activitiesGroup) return <h4>No activities found.</h4>;
 
   return (
-    <div className="flex flex-col gap-3">
+    <div>
       {activitiesGroup.pages.map((activities, index) => (
-        <Fragment key={index}>
+        <div
+          key={index}
+          ref={index === activitiesGroup.pages.length - 1 ? ref : null}
+          className="flex flex-col gap-3"
+        >
           {activities?.items.map((activity) => (
             <ActivityCard key={activity.id} activity={activity} />
           ))}
-        </Fragment>
+        </div>
       ))}
     </div>
   );
