@@ -4,6 +4,7 @@ import ProfilePhotos from "./ProfilePhotos";
 import ProfileAbout from "./ProfileAbout";
 import { useState } from "react";
 import ProfileFollowings from "./ProfileFollowings";
+import ProfileActivities from "./ProfileActivities";
 
 function ProfileContent() {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -11,7 +12,7 @@ function ProfileContent() {
   const tabContent = [
     { label: "About", content: <ProfileAbout /> },
     { label: "Photos", content: <ProfilePhotos /> },
-    { label: "Events", content: <div>Events</div> },
+    { label: "Events", content: <ProfileActivities /> },
     {
       label: "Followers",
       content: <ProfileFollowings activeTab={selectedTab} />,
