@@ -1,4 +1,5 @@
 import {
+  keepPreviousData,
   useInfiniteQuery,
   useMutation,
   useQuery,
@@ -8,8 +9,12 @@ import {
 import agent from "../api/agent";
 import { useLocation } from "react-router";
 import { useAccount } from "./useAccount";
+import { useStore } from "./useStore";
 
 export const useActivities = (id?: string) => {
+  const {
+    activityStore: { filter, startDate },
+  } = useStore();
   const queryClient = useQueryClient();
   const { currentUser } = useAccount();
   const location = useLocation();
@@ -21,7 +26,7 @@ export const useActivities = (id?: string) => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<PagedList<Activity, string>>({
-    queryKey: ["activities"],
+    queryKey: ["activities", filter, startDate],
     queryFn: async ({ pageParam = null }) => {
       const response = await agent.get<PagedList<Activity, string>>(
         "/activities",
@@ -29,6 +34,8 @@ export const useActivities = (id?: string) => {
           params: {
             cursor: pageParam,
             pageSize: 3,
+            filter,
+            startDate,
           },
         }
       );
@@ -36,6 +43,7 @@ export const useActivities = (id?: string) => {
     },
     staleTime: 1000 * 60 * 5,
     initialPageParam: null,
+    placeholderData: keepPreviousData,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     enabled: !id && location.pathname === "/activities" && !!currentUser,
     select: (data) => ({

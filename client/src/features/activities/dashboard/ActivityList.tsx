@@ -2,8 +2,9 @@ import { useActivities } from "@/lib/hooks/useActivities";
 import ActivityCard from "./ActivityCard";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 
-function ActivityList() {
+const ActivityList = observer(function ActivityList() {
   const { activitiesGroup, isLoading, hasNextPage, fetchNextPage } =
     useActivities();
   const { ref, inView } = useInView({
@@ -35,5 +36,6 @@ function ActivityList() {
       ))}
     </div>
   );
-}
+});
+
 export default ActivityList;
