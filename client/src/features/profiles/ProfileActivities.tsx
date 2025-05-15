@@ -50,9 +50,6 @@ function ProfileActivities() {
             </Link>
           </TabsContent>
         ))}
-      {/* <TabsContent value="future">Future Events go here...</TabsContent>
-      <TabsContent value="past">Past events go here...</TabsContent>
-      <TabsContent value="hosting">Hosting events go here...</TabsContent> */}
     </Tabs>
   );
 }
