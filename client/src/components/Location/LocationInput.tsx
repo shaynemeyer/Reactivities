@@ -1,6 +1,5 @@
 import { Input } from "../ui/input";
 import { useEffect, useMemo, useState } from "react";
-import { LocationIQSuggestion } from "@/lib/types";
 import { debounce } from "lodash";
 import axios from "axios";
 import {

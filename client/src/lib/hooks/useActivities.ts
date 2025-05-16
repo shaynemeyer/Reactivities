@@ -41,7 +41,7 @@ export const useActivities = (id?: string) => {
       );
       return response.data;
     },
-    staleTime: 1000 * 60 * 5,
+    // staleTime: 1000 * 60 * 5,
     initialPageParam: null,
     placeholderData: keepPreviousData,
     getNextPageParam: (lastPage) => lastPage.nextCursor,

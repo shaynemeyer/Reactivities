@@ -184,18 +184,15 @@ function ActivityForm() {
             />
 
             <div className="flex justify-end w-full">
+              <Button variant="ghost" onClick={() => router.navigate(-1)}>
+                Cancel
+              </Button>
               <Button
                 type="submit"
                 size="sm"
                 disabled={updateActivity.isPending || createActivity.isPending}
               >
                 Submit
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => router.navigate("/activities")}
-              >
-                Cancel
               </Button>
             </div>
           </form>
